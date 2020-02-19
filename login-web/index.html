@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="./layuilib/css/layui.css">
+
+<body>
+    <form class="layui-form" action="" enctype="multipart/form-data" method="POST" onsubmit="return false"
+        lay-filter="formConfig" name="loginForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username" required lay-verify="required" placeholder="请输入账号" autocomplete="off"
+                    class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="userpwd" required lay-verify="required" placeholder="请输入密码"
+                    autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" id="login">登录</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</body>
+<script src="./layuilib/layui.all.js"></script>
+<script>
+    var form = layui.form;
+    var $ = layui.jquery;
+    var url = 'http://localhost:9001/demo/user/v1/login';
+        var formData;
+        $("#login").click(function () {
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+                form.on("submit(formDemo)", function (data) {
+                    formData = data.field;
+                    console.log(formData);
+                    $.post(url, formData, function (res, status, xhr) {
+                        if (res.code === 2000) {
+                            window.location.href = './html/list.html'
+                        } else {
+                            layer.open({
+                                title: '提示'
+                                , content: res.message
+                            });
+                        }
+                        return;
+                    })
+                });
+            });
+        })
+
+</script>
+
+</html>

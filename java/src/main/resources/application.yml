@@ -1,0 +1,13 @@
+server:
+  port: 9001
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/al
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 123456
+
+mybatis-plus:
+  config-location: classpath:/mybatis/mybatis-config.xml
+  mapper-locations: mybatis/mapper/*.xml
+  type-aliases-package: com.example.demo.entity.model

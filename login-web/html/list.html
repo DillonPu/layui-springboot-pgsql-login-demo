@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>列表</title>
+    <link rel="stylesheet" href="../layuilib/css/layui.css">
+</head>
+
+<body>
+    <table id="demo" lay-filter="test"></table>
+</body>
+<script src="../layuilib/layui.all.js"></script>
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        var $ = layui.jquery;
+        var url = 'http://localhost:9001/demo/user/v1/list';
+        var allValue;
+        $.get(url, function (data) {
+            if (data.code) {
+                allValue = [];
+                var listData = data.data;
+                for (var i = 0; i < listData.length; i++) {
+                    allValue.push(listData[i]);
+                }
+                console.log(data)
+
+                //第一个实例
+                table.render({
+                    elem: '#demo'
+                    , height: 312
+                    , width: 480
+                    , data: allValue
+                    , page: true //开启分页
+                    , cols: [[ //表头
+                        { field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left' }
+                        , { field: 'username', title: '用户名', width: 80 }
+                        , { field: 'age', title: '年龄', width: 80, sort: true }
+                        , { field: 'province', title: '省份', width: 80 }
+                        , { field: 'city', title: '城市', width: 80 }
+                        , { field: 'gender', title: '性别', width: 80 }
+                    ]]
+                });
+            }
+        })
+    });
+</script>
+
+</html>
